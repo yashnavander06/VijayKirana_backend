@@ -15,7 +15,7 @@ const imageRoutes = require('./routes/imageRoutes');
 const miniImageRoutes = require('./routes/miniImageRoutes');
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 4000 
 
 // Middleware
 app.use(cors());
@@ -33,6 +33,8 @@ app.use('/orders', orderRoutes);
 app.use('/reports', reportRoutes);
 app.use('/images', imageRoutes);
 app.use('/minis', miniImageRoutes);
+
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URL, {
