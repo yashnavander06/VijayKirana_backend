@@ -1,5 +1,5 @@
 {
-  "name": "clothify-api",
+  "name": "vijay-kirana",
   "version": "1.0.0",
   "description": "eCommerce api",
   "main": "server.js",
@@ -10,10 +10,10 @@
   "keywords": [
     "eCommerce",
     "Api",
-    "Clothes"
+    "kirana"
   ],
   "author": "Yash Navander",
-  "license": "MIT",
+  "license": "",
   "dependencies": {
     "axios": "^1.12.2",
     "bcryptjs": "^2.4.3",

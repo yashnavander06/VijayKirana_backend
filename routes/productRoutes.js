@@ -26,3 +26,4 @@ router.route('/:id').delete(verifyTokenAndAdmin, deleteProduct);
 router.route('/add_Product_inventory').post(verifyTokenAndAdmin, add_Product_inventory);
 
 module.exports = router;
+
