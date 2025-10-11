@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 
 exports.Register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, phone } = req.body;
+    const { firstName, lastName,password, email,phone } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ phone});
     if (existingUser) {
-      return res.status(400).json({ success: false, message: 'Email already in use' });
+      return res.status(400).json({ success: false, message: 'Phone number already in use' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -16,7 +16,7 @@ exports.Register = async (req, res) => {
     const newUser = await User.create({
       firstName,
       lastName,
-      email,
+      email:email || null,
       password,
       phone
     });
@@ -30,7 +30,7 @@ exports.Register = async (req, res) => {
 
 exports.Login = (req, res) => {
     try {
-        User.findOne({ email: req.body.email }, (err, user) => {
+        User.findOne({ phone: req.body.phone }, (err, user) => {
             if (user) {
                 bcrypt.compare(req.body.password, user.password, (err, same) => {
                     if (same) {
@@ -49,7 +49,7 @@ exports.Login = (req, res) => {
                     } else {
                         res.status(200).json({
                             status: 'failed',
-                            error: 'Wrong email or password'
+                            error: 'Wrong Phone number or password'
                         });
                     }
                 });
@@ -57,7 +57,7 @@ exports.Login = (req, res) => {
             else {
                 res.status(200).json({
                     status: 'failed',
-                    error: 'Wrong email or password'
+                    error: 'Wrong Phone number or password'
                 });
             }
         });
