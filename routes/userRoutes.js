@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {   verifyToken,  verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../middleware/verifyToken');
-const { getAllUsers, getUserById, updateUser, deleteUser, addFavorite, deleteFavorite } = require('../controllers/userController');
+const { getAllUsers, getUserById, updateUser, deleteUser, addFavorite, deleteFavorite,checkPhoneExists, resetPassword } = require('../controllers/userController');
 const { Login, Register } = require('../controllers/authController');
 
 router.route('/').get(verifyToken, verifyTokenAndAdmin, getAllUsers);
@@ -12,5 +12,7 @@ router.route('/register').post(Register);
 router.route('/login').post(Login);
 router.route('/:id/favorite/:favorite').post(verifyTokenAndAuthorization, addFavorite);
 router.route('/:id/favorite/:favorite').delete(verifyTokenAndAuthorization, deleteFavorite);
+router.post('/forgot-password-check', checkPhoneExists);
+router.post('/forgot-password-reset', resetPassword);
 
-module.exports = router;
+module.exports = router;    

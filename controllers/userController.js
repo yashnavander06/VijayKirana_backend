@@ -123,3 +123,39 @@ exports.deleteFavorite = async (req, res) => {
         });
     }
 };
+// ✅ Check if phone exists
+exports.checkPhoneExists = async (req, res) => {
+  try {
+    const { phone } = req.body;
+    if (!phone) return res.status(400).json({ message: "Phone number required" });
+
+    const user = await User.findOne({ phone });
+    if (user) {
+      return res.status(200).json({ exists: true });
+    } else {
+      return res.status(200).json({ exists: false });
+    }
+  } catch (error) {
+    res.status(500).json({ status: 'failed', error });
+  }
+};
+
+// ✅ Reset password (without OTP)
+exports.resetPassword = async (req, res) => {
+  try {
+    const { phone, newPassword } = req.body;
+    if (!phone || !newPassword) {
+      return res.status(400).json({ message: "Phone and new password required" });
+    }
+
+    const user = await User.findOne({ phone });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.password = newPassword; // bcrypt will handle hashing if you use pre-save hook
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ status: 'failed', error });
+  }
+};
